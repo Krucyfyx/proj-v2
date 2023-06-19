@@ -1,0 +1,55 @@
+.container {
+  display: flex;
+  flex-direction: wrap;
+  position: relative;
+  /* height: 100vh; */
+  /* Set the height to the viewport height */
+}
+
+.content {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-sizing: border-box;
+  column-count: 2;
+  column-gap: 10px;
+  height: calc(100% - 40px); /* Subtract the height of the pagination buttons */
+  overflow-y: auto; /* Enable vertical scrollbar when content exceeds height */
+}
+
+#pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.page-display {
+  flex-grow: 1;
+  text-align: center;
+}
+
+#prevBtn,
+#nextBtn {
+  padding: 10px 20px;
+  background-color: #eee;
+  border: none;
+  cursor: pointer;
+  z-index: 2;
+  visibility: hidden;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#prevBtn {
+  left: 5px; /* Adjust the value to move the button closer to the left edge */
+}
+
+#nextBtn {
+  right: 5px; /* Adjust the value to move the button closer to the right edge */
+}
+
