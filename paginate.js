@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const pageDisplay = document.getElementById('pageDisplay');
   const container = document.querySelector('.container');
   const windowHeight = window.innerHeight;
-  const containerHeight = windowHeight * 0.9;
+  const containerHeight = windowHeight * 0.91;
 
   // Retrieve the collected data from local storage
   const collectedData = JSON.parse(localStorage.getItem("collectedData"));
@@ -25,9 +25,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const storedText = localStorage.getItem('text');
     const storedCSS = localStorage.getItem('css');
     const parsedCSS = JSON.parse(storedCSS);
-    contentDiv.textContent = storedText;
+    contentDiv.innerHTML = storedText; // Use innerHTML instead of textContent
+
+    // Apply the required styling to the contentDiv
     for (const prop in parsedCSS) {
-      contentDiv.style[prop] = parsedCSS[prop];
+      if (prop.includes('font') || prop.includes('color') || prop.includes('background')) {
+        contentDiv.style.setProperty(prop, parsedCSS[prop]);
+      }
     }
 
     prevBtn.addEventListener('click', () => {
@@ -53,10 +57,12 @@ document.addEventListener("DOMContentLoaded", () => {
         itemElement.classList.add('injected-text');
         itemElement.textContent = text;
 
-        // Apply the CSS properties to the itemElement
+        // Apply the required styling to the itemElement
         const cssProperties = cssArray[index];
         for (const prop in cssProperties) {
-          itemElement.style.setProperty(prop, cssProperties[prop]);
+          if (prop.includes('font') || prop.includes('color') || prop.includes('background')) {
+            itemElement.style.setProperty(prop, cssProperties[prop]);
+          }
         }
 
         currentPageContent.push(itemElement);
@@ -103,17 +109,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-
 document.addEventListener("DOMContentLoaded", () => {
   const container = document.querySelector('.container');
   const prevBtn = document.getElementById('prevBtn');
   const nextBtn = document.getElementById('nextBtn');
-  
+
   container.addEventListener('mousemove', (event) => {
     const containerRect = container.getBoundingClientRect();
     const containerWidth = containerRect.width;
     const mouseX = event.clientX - containerRect.left;
-    
+
     if (mouseX <= 100) { // Adjust the value to set the hover region width from the left edge
       prevBtn.style.visibility = 'visible';
     } else if (mouseX >= containerWidth - 100) { // Adjust the value to set the hover region width from the right edge
@@ -124,5 +129,3 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-
-
